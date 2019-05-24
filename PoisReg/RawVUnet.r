@@ -446,12 +446,12 @@ CI_raw = quantile(samps_of_interest_raw, probs = c(0.025, 0.975))
 hist(samps_of_interest_unet, xlab = 'Cell Count', ylab = 'Density', main = NA, freq =F, probability = T,
      xaxs = "i",yaxs="i", zero.line = F, border = rgb(227/255,12/255,0/255,0.5), col = rgb(244/255,135/255,32/255,0.5),xlim = c(6,20))
 segments(CI_unet[1], 0.01, CI_unet[2], 0.01, lwd=3, col=rgb(141/255,130/255,122/255,1))
-points(x = mean(samps_of_interest_unet), y = 0.01, pch = 15, col = rgb(141/255,130/255,122/255,1))
+points(x = mean(samps_of_interest_unet), y = 0.01, cex=2, pch = 15, col = rgb(141/255,130/255,122/255,1))
 
 hist(samps_of_interest_raw, xlab = 'Cell Count', ylab = 'Density', main = NA, freq =F, probability = T,
      xaxs = "i",yaxs="i", zero.line = F, border = rgb(227/255,12/255,0/255,0.5), col = rgb(244/255,135/255,32/255,0.5),xlim = c(6,20))
 segments(CI_raw[1], 0.01, CI_raw[2], 0.01, lwd=3, col=rgb(141/255,130/255,122/255,1))
-points(x = mean(samps_of_interest_raw), y = 0.01, pch = 15, col = rgb(141/255,130/255,122/255,1))
+points(x = mean(samps_of_interest_raw), y = 0.01, pch = 15,cex=2, col = rgb(141/255,130/255,122/255,1))
 
 
 ### Posterior Predictive Plot
