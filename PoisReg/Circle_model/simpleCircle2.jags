@@ -1,0 +1,31 @@
+model{
+
+# likelihood
+  for(i in 1:N){
+    y[i] ~ dpois(lambda[i])T(,100)
+    log(lambda[i]) = sum_px[i]/(3.14 * gamma_adj[i]*gamma_adj[i])
+    gamma_adj[i] = gamma + gamma_s*stain[i]
+
+    
+  }
+  #prior
+  gamma_s ~ dnorm(20, 0.001)T(0,)
+  gamma ~ dnorm(30, 0.001)T(0,)
+
+  # prior
+  #mu ~ dunif(0, W)
+  #mu_s ~ dunif(0, W)
+  #sigma_s ~ dnorm(0,0.0001)T(0,)
+  #tau_s = 1/(sigma_s*sigma_s)
+  #sigma ~ dnorm(0,0.0001)T(0,)
+  #tau = 1/(sigma*sigma)
+
+  for(k in 1:NTest){
+    y_hat[k] ~ dpois(lambda_hat[k])T(,100)
+    log(lambda_hat[k]) = sum_px_test[k]/(3.14 * gamma_adj_hat[k]*gamma_adj_hat[k])
+    gamma_adj_hat[k] = gamma + gamma_s*stain_test[k]
+
+  }
+
+
+}

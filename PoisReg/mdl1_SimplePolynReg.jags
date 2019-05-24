@@ -1,0 +1,31 @@
+model{
+
+# Likelihood
+for(i in 1:N){
+  y[i] ~ dround(y_true[i], 0)
+  y_true[i] ~ dnorm(eta[i],sigma)T(0,100)
+  eta[i] <- beta0 + beta1*x1[i] +  beta2*x1[i] *x1[i]
+  loglik[i] <- logdensity.norm(y[i], eta[i], sigma)
+
+
+}
+
+# prior
+beta2 ~dnorm(0, 0.0001)
+beta1 ~dnorm(0, 0.0001)
+beta0 ~dnorm(0, 0.0001)
+
+
+sigma ~ dnorm(0, 0.0001)T(0,)
+### Prediction
+
+for(j in 1:NTest){
+  y_hat[j] ~ dround(y_hat_true[j], 0)
+  y_hat_true[j] ~ dnorm(eta_hat[j],sigma)T(0, 100)
+  eta_hat[j] <- beta0 + beta1*xtest1[j] + beta2*xtest1[j] *xtest1[j] 
+
+
+}
+
+
+}

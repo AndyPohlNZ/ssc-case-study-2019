@@ -1,0 +1,28 @@
+model{
+
+# Likelihood
+for(i in 1:N){
+  y[i] ~ dpois(lambda[i])T(,100)
+  log(lambda[i]) <- exp(eta[i])
+  eta[i] <- beta0 + beta1[b[i]]*x1[i]  + beta3*x2[i]
+
+}
+
+# prior
+beta0 ~ dnorm(0, 0.0001)
+beta1[1] ~dnorm(0, 0.0001)
+beta1[2] ~dnorm(0, 0.0001)
+beta1[3] ~dnorm(0, 0.0001)
+#beta2 ~ dnorm(0, 0.0001)
+beta3 ~ dnorm(0, 0.0001)
+### Prediction
+
+for(j in 1:NTest){
+  y_hat[j] ~ dpois(lambda_hat[j])T(,100)
+  log(lambda_hat[j]) <- eta_hat[j]
+  eta_hat[j] <- beta0 + beta1[best[j]]*xtest1[j]  + beta3*xtest2[j]
+
+}
+
+
+}

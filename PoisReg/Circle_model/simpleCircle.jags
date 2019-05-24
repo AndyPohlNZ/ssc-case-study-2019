@@ -1,0 +1,23 @@
+model{
+
+# likelihood
+  for(i in 1:N){
+    y[i] ~ dpois(lambda[i])T(,100)
+    
+    log(lambda[i]) = sum_px[i]/(3.14 * gamma*gamma)
+
+  }
+  gamma ~ dnorm(mu, tau)T(0,)
+  # prior
+  mu ~ dunif(0, W)
+  sigma ~ dnorm(0,0.0001)T(0,)
+  tau = 1/(sigma*sigma)
+
+  for(k in 1:NTest){
+    y_hat[k] ~ dpois(lambda_hat[k])T(,100)
+
+    log(lambda_hat[k]) = sum_px_test[k]/(3.14 * gamma*gamma)
+  }
+
+
+}
