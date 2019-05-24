@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{chollet2015keras}
+F.~Chollet et~al.
+\newblock Keras.
+\newblock \url{https://github.com/fchollet/keras}, 2015.
+
+\bibitem{VebjornLjosa2012Ahmi}
+V.~Ljosa, K.~L. Sokolnicki, and A.~E. Carpenter.
+\newblock Annotated high-throughput microscopy image sets for validation.
+\newblock {\em Nature Methods}, 9(7), 2012.
+
+\end{thebibliography}

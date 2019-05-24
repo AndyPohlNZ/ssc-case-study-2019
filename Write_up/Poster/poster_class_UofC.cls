@@ -57,14 +57,15 @@
 \RequirePackage{xcolor}
 \RequirePackage{multicol}
 \RequirePackage{fancyhdr}
-
+\RequirePackage{multirow}
+\usepackage{changepage}   % for the adjustwidth environment
 %% Set some dimensions for layout.
 \setlength{\paperwidth}{106.7cm}
 \setlength{\paperheight}{121.9cm}
 \setlength{\textwidth}{97.2cm}
 \setlength{\textheight}{99.6cm}
 
-\setlength{\oddsidemargin}{1cm}
+\setlength{\oddsidemargin}{1.5cm}
 \setlength{\evensidemargin}{0cm}
 \setlength{\topmargin}{-0.3in}
 \setlength{\headheight}{464pt}
@@ -286,5 +287,13 @@
 
 % Set paragraph indetation
 %\setlength{\parindent}{4ex}
+
+% Set table Hline widths
+\def\hlinewd#1{%
+\noalign{\ifnum0=`}\fi\hrule \@height #1 %
+\futurelet\reserved@a\@xhline} 
+% set header whitespace
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{2pt}{*3}{*2}
 
 \endinput

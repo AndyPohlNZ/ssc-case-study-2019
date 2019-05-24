@@ -1,0 +1,49 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref}
+%\usepackage[english]{babel}
+\usepackage{authblk}
+\RequirePackage[font=small,font=sf,labelfont=bf]{caption}[2005/06/28]
+\usepackage[margin=0.4in]{geometry}
+\usepackage{etoolbox}
+%\oddsidemargin 0pt
+%\evensidemargin 0pt
+%\marginparwidth 0pt
+%\marginparsep 0pt
+%\topmargin -4cm
+%\headsep 10pt
+%\textheight 12in
+%\textwidth 7in
+%\linespread{1.2}
+
+\title{\large U-turning on Deep Learning Methods for Cell Counting - A Bayesian Regression Approach}
+\author[1]{\normalsize Andrew Pohl}
+\author[2]{\normalsize Dylan Loader}
+\author[2]{\normalsize MingKuan}
+\affil[1]{\small Faculty of Kinesiology - \textit{University of Calgary}}
+\affil[2]{\small Department of Mathematics and Statistics - \textit{University of Calgary}}
+\date{}
+
+
+\begin{document}
+\maketitle
+\textbf{Introduction:}
+blah....
+
+\textbf{Methods:} 
+Supplied training data was split randomly into a training set ($80\%$) and validation set ($20\%$) to allow for validation of cell count prediction models.  Parameters for prediction of cell counts were estimated from the $1920$ images in the training set and then performance assessed on the $480$ images within the with-held validation set. To examine the effectiveness of U-Net image pre-processing a Bayesian implementation of polynomial regression was applied to predict the number of cells from either raw images or U-Net generated image mask.  To account for increased likelihood of cell overlap with increasing cell count, the sum of the normalised pixels for each image $x_i$ along with its square of were used as covariates to estimate cell count for each image ($y_i$). Three polynomial regression models were examined: (i) a single level model where parameter values were estimated from all images, (ii) a random slopes model where slope regression parameters ($\beta_1, \beta_2$) were allowed to vary for each stain/blur level group $j = 1, ..., 6$ and (iii) a model where both slopes ($\beta_1, \beta_2$) and intercepts ($\beta_0$) were allowed to vary for each group.  The full varying slope and intercept model is outlined in  (\ref{eqn:RegressionModel}). Parameters of each model were estimated via Markov Chain Monte Carlo with weakly informative priors were utilised for each parameter.
+\begin{align}
+y_{ij} \sim N(\mu_{ij}, \sigma^2) \nonumber\\
+\mu_{ij} = {\beta_0}_{ij} + {\beta_1}_{ij} x_{ij} + {\beta_2}_{ij} x_{ij}^2 \label{eqn:RegressionModel}
+\end{align}     
+
+     The U-Net image preprocessor consisted of a 5 layered encoder and subsequent 5 layer decoder neural network trained on 830 images with ground-truth segmentation masks obtained from the Broad Bioimage Benchmark Collection. To increase training set size (and improve image segmentation performance) a data-generator was constructed which rescaled images and performed random rotations along with horizontal and vertical image shifts.  The network was trained using the ADAM optimiser and dice coefficient loss. Training was performed for 7 epochs with a batch size of 64 based on a early stopping condition when no improvement was observed on a random 5\% validation set.
+
+\textbf{Results:}
+A multilevel polynomial regression model was effective in providing accurate estimates of cell count (RMSE = 1.74) along with well calibrated prediction intervals from raw microscopy images.  However, despite a U-Net neural network being effective at creating segmentation masks, and this preprocessing step did not improve the accuracy of cell count prediction with similar (RMSE U-Net = 1.94). 
+
+%\bibliographystyle{abbrv}
+%\bibliography{refs} % see references.bib for bibliography management
+
+\end{document}

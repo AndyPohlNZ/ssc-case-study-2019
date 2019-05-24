@@ -1,0 +1,19 @@
+\begin{thebibliography}{1}
+
+\bibitem{FalkThorsten2019Udlf}
+T.~Falk, D.~Mai, R.~Bensch, O.~Cicek, A.~Abdulkadir, Y.~Marrakchi, and A.~Bohm.
+\newblock U-net: deep learning for cell counting, detection, and morphometry.
+\newblock {\em Nature Methods}, 16(1), 2019.
+
+\bibitem{VebjornLjosa2012Ahmi}
+V.~Ljosa, K.~L. Sokolnicki, and A.~E. Carpenter.
+\newblock Annotated high-throughput microscopy image sets for validation.
+\newblock {\em Nature Methods}, 9(7), 2012.
+
+\bibitem{VehtariAki2017PBme}
+A.~Vehtari, A.~Gelman, and J.~Gabry.
+\newblock Practical bayesian model evaluation using leave-one-out
+  cross-validation and waic.
+\newblock {\em Statistics and Computing}, 27(5):1413--1432, 2017.
+
+\end{thebibliography}

@@ -34,9 +34,9 @@
 \settitlesize{64pt}{60pt}
 
 % General info
-\title{\uppercase{U-Net image segmentation does not improve multi-level \\regression model performance when predicting cell counts \\from fluorescene microscopy images }} 
+\title{\uppercase{U-turning on Deep Learning Methods for Cell Counting:\\ A Bayesian Regression Approach}} 
 
-\author{Andrew Pohl\textsuperscript{1}, Dylan Loader\textsuperscript{2}, Mingkuan ...\textsuperscript{2}} 
+\author{Andrew Pohl\textsuperscript{1}, Dylan Loader\textsuperscript{2}, Mingkuan Wu\textsuperscript{2}} 
 
 \department{\textsuperscript{1}Faculty of Kinesiology. \textsuperscript{2}Department of Mathematics and Statistics \\ 
 University of Calgary}
@@ -61,13 +61,25 @@ University of Calgary}
     %%             Begin poster            %%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Introduction}
-    
-        \lipsum[3-5]
+\begin{itemize}
+\item With the invention of high throughput automated image cytometry techniques, the generation of cellular microscopy image data has accelerated drastically and automated methods are required to count cells.  
+
+\item Current methods for cell counting are often adversely affected by deviations in image focus, by the use of differing cell staining techniques and by the fact that cells often overlap each other in images. 
+
+\item Deep learning based image preprocessing techniques may be beneficial at improving automated methods to predict cell counts.
+\end{itemize}
+
+
         
     \section{Methods}%
         
-        \subsection{Data Preparation}
-       To develop a robust training and testing environment which allowed for testing of model performance the supplied training data was split randomly into a training set ($80\%$) and validation set ($20\%$).  Parameters for regression models were estimated from the $1920$ images in the training set and then performance assessed on the $480$ images within the with-held validation set.  Images were used in the supplied .TIF format with no further image processing performed. Thus images contained between 1 and 100 cells identified by one of two cell staining techniques and subjected to one of three levels of bluing.
+        \subsection{Dataset}
+\begin{itemize}
+\item The dataset consists of 3600 simulated fluorescence microscope slides obtained using 2 types of stain and 3 levels of imaging blurring, with cell counts ranging from 1 to 100 \cite{VebjornLjosa2012Ahmi}.
+
+\item The dataset was segmented into three separate sets.  A testing set of $1200$ images was with-held by the judges.  To construct a robust training and validation environment we further segmented the training set into training (1920 images) and validation sets (480 images).
+\end{itemize}
+      
         \subsection{U-Net Training}
 The U-Net [CITATION] is a common encoder-decoder neural network architecture which has been shown to be effective in image segmentation tasks [CITATION]. The U-Net we used to segment cells from the background of the supplied images was simplified from that used by [CITE NATURE PAPER].  It consisted of 5 layered encoder consisting of 2-dimensional convolution layers of 32,64,128,256 and 512 filters with 3x3 kernals activated by leaky rectified linear units (ReLU) Max pooling was performed between each layer, effectively halving the resolution of each feature map.  Following the encoder an equivalent 5 layer decoder network (similar but reversed layers as the encoder) was constructed with characteristic up-convolution performed immediately prior to each convolution layer.  Finally a 1 dimensional convolution layer with 1x1 kernal activated with the soft-max function was used to produce the segmentation mask for each image. The architecture for the U-Net is outlined in figure \ref{fig:U-NET}.
         
@@ -94,7 +106,7 @@ The U-Net [CITATION] is a common encoder-decoder neural network architecture whi
      Three polynomial regression models were examined: (i) a single level model where parameter values were estimated from all images, (ii) a random slopes model where slope regression parameters ($\beta_1, \beta_2$) were allowed to vary for each stain/blur level group $j = 1, ..., 6$ and (iii) a model where both slopes ($\beta_1, \beta_2$) and intercepts ($\beta_0$) were allowed to vary for each group.  The full varying slope and intercept model is outlined in  (\ref{eqn:RegressionModel}).
 \begin{align}
 y_{ij} \sim N(\mu_{ij}, \sigma^2) \nonumber\\
-\mu_{ij} = {\beta_0}_{ij} + {\beta_1}_{ij} x_{ij} + {\beta_2}_{ij} x_{ij}^2 \label{eqn:RegressionModel}
+\mu_{ij} = {\beta_0}_{j} + {\beta_1}_{j} x_{ij} + {\beta_2}_{j} x_{ij}^2 \label{eqn:RegressionModel}
 \end{align}     
      Parameters of each model were estimated via Markov Chain Monte Carlo implemented in JAGS [CITE JAGS]. Weakly informative priors were utilised for each parameter. Four chains of 10000 iterations were used with convergence examined via visual examination of traceplots and determination of the R-hat and effective sample size statistics [Cite GELMAN].     
         
@@ -115,9 +127,9 @@ The RMSE of predicting the number of cells from images within the validation is 
                 \multirow{2}{*}{Model} & Number of & \multicolumn{2}{c}{Validation RMSE}\\
                 & Parameters & Raw Images & U-Net Masks\\
                 \hline
-                Single Level & 3 & 21.77 & 19.80 \\
-                Varying Slopes & 13 & 12.45 & 13.39\\
-                Varying Slopes \& Intercepts & 18 & 1.74 & 1.94\\
+                $\mu_{ij} = {\beta_0} + {\beta_1} x_{ij} + {\beta_2} x_{ij}^2$ & 3 & 21.77 & 19.80 \\
+                $\mu_{ij} = {\beta_0} + {\beta_1}_{j} x_{ij} + {\beta_2}_{j} x_{ij}^2$ & 13 & 12.45 & 13.39\\
+                $\mu_{ij} = {\beta_0}_{j} + {\beta_1}_{j} x_{ij} + {\beta_2}_{j} x_{ij}^2$ & 18 & 1.74 & 1.94\\
                 \hlinewd{3pt} 
                 \end{tabular}
             }
