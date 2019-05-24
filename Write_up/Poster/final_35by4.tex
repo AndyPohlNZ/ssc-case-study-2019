@@ -101,7 +101,7 @@ Falk et al. (2019) \cite{FalkThorsten2019Udlf} was trained on a subset of 830 im
         \begin{figure}
                     \centering
             \captionsetup{type=figure}
-            \includegraphics[scale=1]{./images/UNet_Arch.png}
+            \includegraphics[scale=.8]{./images/UNet_Arch.pdf}
             \caption{U-Net architecture used for image segmentation.}
             \label{fig:U-NET}
         \end{figure}
@@ -140,30 +140,25 @@ Contradictory to our hypothesis RMSE is similar between raw images and when imag
             \end{table}
             \vspace{1cm}
             
-U-Net segmentation had the effect of making differences between the 3 levels of blurring and two different stains become more apparent. \\
+U-Net segmentation had the effect of making differences between the 3 levels of blurring and two different stains become more apparent. 
 
-             \vspace{1cm}
            \begin{figure}
             \centering
             \captionsetup{type=figure}
-            \includegraphics[scale=1.7]{./images/rawVUnet.png}
+            \includegraphics[scale=1.2]{./images/RawVUnet.pdf}
             \caption{Relationship between sum of pixels and cell count for (a) raw images and (b) images after U-Net segmentation processing. Low blur is indicated in blue, medium in orange and high in green with nuclei stained images represented by circles and cell body stain represented by triangles. Fitted regression lines for the varying slopes and intercept model are included.}
             \label{fig:Results}
         \end{figure}   
             \vspace{1cm}
 With Bayesian mixed level regression models we are able to sample from the posterior predictive distribution for the number of cells given each image in the test set and generate prediction intervals. The prediction intervals for images within the validation set were well calibrated with 95.8\% of 95\% prediction intervals containing the true cell count and intervals having an average width of $\pm 3$ cells.
 
-
-
-             \vspace{1cm}
            \begin{figure}
             \centering
             \captionsetup{type=figure}
-            \includegraphics[scale=1.7]{./images/PostPredDist.png}
-            \caption{Posterior predictive distribution for an image containing 14 cells when generated via the raw image (a) or U-Net segmentation mask (b).}
+            \includegraphics[scale=1]{./images/PostPred.pdf}
+            \caption{Posterior predictive distribution for an image containing 14 cells when generated via the raw image (a) or a U-Net segmentation mask (b).}
             \label{fig:PostPredDist}
         \end{figure}   
-            \vspace{1cm}
             
     
         \section{Conclusions}
